@@ -1,5 +1,6 @@
 import 'package:about_film/models/popular/popular_page_model.dart';
 import 'package:about_film/services/network_services/network_service.dart';
+import 'package:about_film/widgets/popularPageListOfItems.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,13 +18,86 @@ class _HomePageState extends State<HomePage> {
           future: getPopularPage(),
           builder: (context, snapshot) {
             if (snapshot.hasData)
-              return Text(
-                'Title from Post JSON : ${snapshot.data.results[0].title}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0),
+              return Container(
+                height: 300,
+                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          "https://image.tmdb.org/t/p/w500${snapshot.data.results[0].poster_path}",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Text(
+                            '${snapshot.data.results[0].title}',
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                letterSpacing: 0.5),
+                          ),
+                          SizedBox(
+                            height: 40.0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.star,
+                                color: Color.fromRGBO(255, 223, 0,
+                                    snapshot.data.results[0].vote_average / 10),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                '${snapshot.data.results[0].vote_average}',
+                                style: TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5),
+                              ),
+                              Text(
+                                '/10',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Text(
+                            '${snapshot.data.results[0].vote_count} votes',
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black,
+                                letterSpacing: 0.5),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               );
+//                PopularListOfItems(snapshot.data.results);
             else
               return CircularProgressIndicator();
           },

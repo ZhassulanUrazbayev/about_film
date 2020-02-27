@@ -8,13 +8,26 @@ http.Client client = http.Client();
 String _baseUrl =
     'https://api.themoviedb.org/3/movie';
 
+String _imageUrl = "https://image.tmdb.org/t/p/w500";
+
 String _apiKey = "7c306df82f88282cab6dbc20faa3bb50";
 
-String token =
+String _token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YzMwNmRmODJmODgyODJjYWI2ZGJjMjBmYWEzYmI1MCIsInN1YiI6IjVlNTVlZjlhMzU4MTFkMDAxNTVjMTM0YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AGShBjZEWA6SFg_a04xjWblTZEZLF8z8NZKDPiqYtmE";
 
 Future<Popular> getPopularPage() async {
   final response = await client.get("$_baseUrl/popular?api_key=$_apiKey");
+  print(response.statusCode.toString());
+  if (response.statusCode == 200) {
+    return PopularFromJson(response.body);
+  } else {
+    print("Status code : ${response.statusCode}");
+    throw Exception('Failed to load movies list');
+  }
+}
+
+Future<Popular> getPostImage(String posterPath) async {
+  final response = await client.get("$_imageUrl$posterPath");
   print(response.statusCode.toString());
   if (response.statusCode == 200) {
     return PopularFromJson(response.body);
