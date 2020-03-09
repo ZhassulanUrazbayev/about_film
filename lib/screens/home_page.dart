@@ -21,8 +21,8 @@ class _HomePageState extends State<HomePage> {
               return Container(
                 height: 300,
                 child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.center,
-//                  crossAxisAlignment: CrossAxisAlignment.center,
+//                  mainAxisAlignment: MainAxisAlignment.start,
+//                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(left: 20.0),
@@ -38,22 +38,29 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.only(left: 15.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(
                             height: 20.0,
                           ),
-                          Text(
-                            '${snapshot.data.results[0].title}',
-                            style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                letterSpacing: 0.5),
+                          Container(
+                            width: 170,
+                            child: Text(
+                              '${snapshot.data.results[0].title}',
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  letterSpacing: 0.7),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           SizedBox(
                             height: 40.0,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Icon(
                                 Icons.star,
